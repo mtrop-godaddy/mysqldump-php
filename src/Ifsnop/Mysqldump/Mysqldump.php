@@ -171,7 +171,7 @@ class Mysqldump
         }
 
         // Dump the same views as tables, mimic mysqldump behaviour
-        $this->dumpSettings['include-views'] = $this->dumpSettings['include-tables'];
+        //$this->dumpSettings['include-views'] = $this->dumpSettings['include-tables'];
 
         // Create a new compressManager to manage compressed output
         $this->compressManager = CompressManagerFactory::create($this->dumpSettings['compress']);
@@ -348,9 +348,9 @@ class Mysqldump
         }
 
         $this->exportTables();
-        $this->exportViews();
+        //$this->exportViews();
         $this->exportTriggers();
-        $this->exportProcedures();
+        //$this->exportProcedures();
 
         // Restore saved parameters
         $this->compressManager->write(
@@ -1532,9 +1532,8 @@ class TypeAdapterMysql extends TypeAdapterFactory
     {
         $this->check_parameters(func_num_args(), $expected_num_args = 1, __METHOD__);
         $args = func_get_args();
-        return "SELECT TABLE_NAME AS tbl_name " .
-            "FROM INFORMATION_SCHEMA.TABLES " .
-            "WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='${args[0]}'";
+	// in theory we could set innodb_stats_on_metadata=0 and still use the information schema, but this is easier, since we are going to ignore views
+        return "SHOW TABLES FROM '${args[0]}'";
     }
 
     public function show_views()
