@@ -436,6 +436,7 @@ class Mysqldump
         }
 
         // Listing all views from database
+/*
         if (empty($this->dumpSettings['include-views'])) {
             // include all views for now, blacklisting happens later
             foreach ($this->dbHandler->query($this->typeAdapter->show_views($this->dbName)) as $row) {
@@ -454,6 +455,7 @@ class Mysqldump
                 }
             }
         }
+*/
 
         // Listing all triggers from database
         if (false === $this->dumpSettings['skip-triggers']) {
