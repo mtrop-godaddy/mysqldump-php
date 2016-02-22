@@ -338,15 +338,6 @@ class Mysqldump
             );
         }
 
-        // If there still are some tables/views in include-tables array,
-        // that means that some tables or views weren't found.
-        // Give proper error and exit.
-        // This check will be removed once include-tables supports regexps
-        if (0 < count($this->dumpSettings['include-tables'])) {
-            $name = implode(",", $this->dumpSettings['include-tables']);
-            throw new Exception("Table (" . $name . ") not found in database");
-        }
-
         $this->exportTables();
         //$this->exportViews();
         $this->exportTriggers();
@@ -424,6 +415,7 @@ class Mysqldump
         } else {
             // include only the tables mentioned in include-tables
 	    $this->tables = array_values($this->dumpSettings['include-tables']);
+            $this->dumpSettings['include-tables'] = [];
 	/*
             foreach ($this->dbHandler->query($this->typeAdapter->show_tables($this->dbName)) as $row) {
                 if (in_array(current($row), $this->dumpSettings['include-tables'], true)) {
