@@ -423,6 +423,8 @@ class Mysqldump
             }
         } else {
             // include only the tables mentioned in include-tables
+	    $this->tables = array_values($this->dumpSettings['include-tables']);
+	/*
             foreach ($this->dbHandler->query($this->typeAdapter->show_tables($this->dbName)) as $row) {
                 if (in_array(current($row), $this->dumpSettings['include-tables'], true)) {
                     array_push($this->tables, current($row));
@@ -433,6 +435,7 @@ class Mysqldump
                     unset($this->dumpSettings['include-tables'][$elem]);
                 }
             }
+*/
         }
 
         // Listing all views from database
