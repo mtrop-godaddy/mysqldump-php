@@ -753,7 +753,7 @@ class Mysqldump
      * @param string $tableName Name of table which contains rows
      * @param array $row Associative array of column names and values to be quoted
      *
-     * @return string
+     * @return array
      */
     private function escape($tableName, $row)
     {
@@ -942,7 +942,7 @@ class Mysqldump
                 $colStmt[] = "`${colName}`";
             }
         }
-        $colStmt = implode($colStmt, ",");
+        $colStmt = implode(",", $colStmt);
 
         return $colStmt;
     }
